@@ -35,6 +35,16 @@ DATASET = [
     ("Thanks for your help yesterday.", "ham"),
     ("Cheap meds available online, no prescription needed!", "spam"),
     ("Get rich quick with this one simple trick.", "spam"),
+    ("You have won free movie tickets, reply YES now.", "spam"),
+    ("Act now to unlock your bonus reward points.", "spam"),
+    ("Final warning: payment failed, update your billing details.", "spam"),
+    ("Your package is waiting. Confirm address through this link.", "spam"),
+    ("Are you joining the team call at 3 PM?", "ham"),
+    ("Please review the pull request when you get time.", "ham"),
+    ("Dinner is ready, come downstairs.", "ham"),
+    ("Meeting moved to Friday due to client request.", "ham"),
+    ("I shared the slides in our group chat.", "ham"),
+    ("Can you pick up groceries on your way back?", "ham"),
 ]
 
 
