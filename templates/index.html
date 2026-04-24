@@ -68,6 +68,8 @@
       const resultCard = document.getElementById("resultCard");
       const resultLabel = document.getElementById("resultLabel");
       const resultProbability = document.getElementById("resultProbability");
+      const resultConfidence = document.getElementById("resultConfidence");
+      const resultRisk = document.getElementById("resultRisk");
       const errorAlert = document.getElementById("errorAlert");
 
       function showError(message) {
@@ -107,6 +109,8 @@
           const isSpam = data.label === "Spam";
           resultLabel.textContent = data.label;
           resultProbability.textContent = `${data.probability}% Spam`;
+          resultConfidence.textContent = `${data.confidence}%`;
+          resultRisk.textContent = data.risk_level;
 
           resultCard.classList.remove("result-spam", "result-safe");
           resultCard.classList.add(isSpam ? "result-spam" : "result-safe");
