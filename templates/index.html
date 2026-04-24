@@ -75,6 +75,20 @@
       const resultConfidence = document.getElementById("resultConfidence");
       const resultRisk = document.getElementById("resultRisk");
       const errorAlert = document.getElementById("errorAlert");
+      const sampleButtons = document.querySelectorAll(".sample-btn");
+
+      sampleButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          messageInput.value = btn.dataset.sample || "";
+          messageInput.focus();
+        });
+      });
+
+      messageInput.addEventListener("keydown", (event) => {
+        if (event.ctrlKey && event.key === "Enter") {
+          checkBtn.click();
+        }
+      });
 
       function showError(message) {
         errorAlert.textContent = message;
