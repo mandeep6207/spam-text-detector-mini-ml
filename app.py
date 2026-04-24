@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "model.pkl"
 VECTORIZER_PATH = BASE_DIR / "vectorizer.pkl"
+SPAM_THRESHOLD = 0.5
 
 app = Flask(__name__)
 
@@ -57,12 +58,22 @@ def predict():
     spam_index = classes.index("spam")
     spam_probability = float(probabilities[spam_index])
 
-    label = "Spam" if spam_probability >= 0.5 else "Not Spam"
+    label = "Spam" if spam_probability >= SPAM_THRESHOLD else "Not Spam"
+    confidence = spam_probability if label == "Spam" else 1 - spam_probability
+
+    if spam_probability >= 0.8:
+        risk_level = "high"
+    elif spam_probability >= 0.5:
+        risk_level = "medium"
+    else:
+        risk_level = "low"
 
     return jsonify(
         {
             "label": label,
             "probability": round(spam_probability * 100, 2),
+            "confidence": round(confidence * 100, 2),
+            "risk_level": risk_level,
         }
     )
 
