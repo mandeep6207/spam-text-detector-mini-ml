@@ -15,6 +15,7 @@ body {
   border-radius: 18px;
   padding: 2rem;
   border: 1px solid #e8edf5;
+  animation: card-rise 0.45s ease;
 }
 
 #messageInput {
@@ -38,4 +39,21 @@ body {
   background-color: #effcf3;
   border-left-color: #198754;
   color: #14532d;
+}
+
+.sample-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@keyframes card-rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
