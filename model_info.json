@@ -1,0 +1,9 @@
+{
+  "model": "LogisticRegression",
+  "vectorizer": "TfidfVectorizer",
+  "samples": 30,
+  "labels": [
+    "ham",
+    "spam"
+  ]
+}
