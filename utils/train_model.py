@@ -2,6 +2,7 @@ import os
 import pickle
 import re
 import string
+import json
 from pathlib import Path
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -12,6 +13,7 @@ from sklearn.linear_model import LogisticRegression
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = PROJECT_ROOT / "model.pkl"
 VECTORIZER_PATH = PROJECT_ROOT / "vectorizer.pkl"
+MODEL_INFO_PATH = PROJECT_ROOT / "model_info.json"
 
 
 DATASET = [
@@ -75,8 +77,18 @@ def train_and_save() -> None:
     with open(VECTORIZER_PATH, "wb") as vectorizer_file:
         pickle.dump(vectorizer, vectorizer_file)
 
+    model_info = {
+        "model": "LogisticRegression",
+        "vectorizer": "TfidfVectorizer",
+        "samples": len(DATASET),
+        "labels": sorted(set(labels)),
+    }
+    with open(MODEL_INFO_PATH, "w", encoding="utf-8") as info_file:
+        json.dump(model_info, info_file, indent=2)
+
     print(f"Model saved to: {MODEL_PATH}")
     print(f"Vectorizer saved to: {VECTORIZER_PATH}")
+    print(f"Model info saved to: {MODEL_INFO_PATH}")
 
 
 if __name__ == "__main__":
