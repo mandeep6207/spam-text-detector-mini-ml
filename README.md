@@ -95,7 +95,3 @@ Checks service and model readiness.
 
 Returns model metadata from `model_info.json`.
 
-## Notes
-
-- Dataset is intentionally small and beginner-friendly.
-- Extend `DATASET` in `utils/train_model.py` for better real-world performance.
