@@ -1,6 +1,7 @@
 import pickle
 import re
 import string
+import json
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
@@ -10,6 +11,7 @@ from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "model.pkl"
 VECTORIZER_PATH = BASE_DIR / "vectorizer.pkl"
+MODEL_INFO_PATH = BASE_DIR / "model_info.json"
 SPAM_THRESHOLD = 0.5
 
 app = Flask(__name__)
@@ -40,6 +42,16 @@ def home():
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "model_ready": MODEL_READY})
+
+
+@app.route("/model-info", methods=["GET"])
+def model_info():
+    if not MODEL_INFO_PATH.exists():
+        return jsonify({"error": "Model info not available. Retrain model first."}), 404
+
+    with open(MODEL_INFO_PATH, "r", encoding="utf-8") as info_file:
+        info = json.load(info_file)
+    return jsonify(info)
 
 
 @app.route("/predict", methods=["POST"])
