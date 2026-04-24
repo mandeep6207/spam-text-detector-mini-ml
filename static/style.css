@@ -1,0 +1,41 @@
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f3f7ff 0%, #f8f9fb 45%, #eefdf5 100%);
+}
+
+.page-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.app-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2rem;
+  border: 1px solid #e8edf5;
+}
+
+#messageInput {
+  resize: vertical;
+}
+
+.result-card {
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  border-left: 6px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.result-spam {
+  background-color: #fff1f1;
+  border-left-color: #d90429;
+  color: #7f1d1d;
+}
+
+.result-safe {
+  background-color: #effcf3;
+  border-left-color: #198754;
+  color: #14532d;
+}
