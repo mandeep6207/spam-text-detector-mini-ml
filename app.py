@@ -28,10 +28,17 @@ with open(MODEL_PATH, "rb") as model_file:
 with open(VECTORIZER_PATH, "rb") as vectorizer_file:
     vectorizer = pickle.load(vectorizer_file)
 
+MODEL_READY = model is not None and vectorizer is not None
+
 
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html")
+
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok", "model_ready": MODEL_READY})
 
 
 @app.route("/predict", methods=["POST"])
