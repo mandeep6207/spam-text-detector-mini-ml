@@ -37,6 +37,15 @@ def get_spam_probability(probabilities, classes) -> float:
     return float(probabilities[spam_index])
 
 
+def get_risk_level(spam_probability: float) -> str:
+    """Map a spam probability to a risk level."""
+    if spam_probability >= 0.8:
+        return "high"
+    if spam_probability >= 0.5:
+        return "medium"
+    return "low"
+
+
 with open(MODEL_PATH, "rb") as model_file:
     model = pickle.load(model_file)
 
@@ -103,12 +112,7 @@ def predict():
     label = "Spam" if spam_probability >= SPAM_THRESHOLD else "Not Spam"
     confidence = spam_probability if label == "Spam" else 1 - spam_probability
 
-    if spam_probability >= 0.8:
-        risk_level = "high"
-    elif spam_probability >= 0.5:
-        risk_level = "medium"
-    else:
-        risk_level = "low"
+    risk_level = get_risk_level(spam_probability)
 
     return jsonify(
         {
