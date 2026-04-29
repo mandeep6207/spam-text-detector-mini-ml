@@ -71,6 +71,10 @@ def predict():
         return jsonify({"error": "Model artifacts are not loaded."}), 503
 
     data = request.get_json(silent=True) or {}
+
+    if not isinstance(data, dict):
+        return jsonify({"error": "Request body must be a JSON object."}), 400
+
     text = (data.get("text") or "").strip()
 
     if not text:
