@@ -14,6 +14,7 @@ MODEL_PATH = BASE_DIR / "model.pkl"
 VECTORIZER_PATH = BASE_DIR / "vectorizer.pkl"
 MODEL_INFO_PATH = BASE_DIR / "model_info.json"
 SPAM_THRESHOLD = 0.5
+MAX_TEXT_LENGTH = 5000
 
 app = Flask(__name__)
 
@@ -83,6 +84,9 @@ def predict():
 
     if not text:
         return jsonify({"error": "Please provide a text message."}), 400
+
+    if len(text) > MAX_TEXT_LENGTH:
+        return jsonify({"error": "Text message is too long."}), 413
 
     processed_text = preprocess_text(text)
     features = vectorizer.transform([processed_text])
