@@ -108,10 +108,13 @@ def predict():
     if len(text) > MAX_TEXT_LENGTH:
         return jsonify({"error": "Text message is too long."}), 413
 
-    processed_text = preprocess_text(text)
-    features = vectorizer.transform([processed_text])
-    probabilities = model.predict_proba(features)[0]
-    spam_probability = get_spam_probability(probabilities, model.classes_)
+    try:
+        processed_text = preprocess_text(text)
+        features = vectorizer.transform([processed_text])
+        probabilities = model.predict_proba(features)[0]
+        spam_probability = get_spam_probability(probabilities, model.classes_)
+    except Exception:
+        return jsonify({"error": "Prediction failed."}), 500
 
     label = "Spam" if spam_probability >= SPAM_THRESHOLD else "Not Spam"
     confidence = spam_probability if label == "Spam" else 1 - spam_probability
