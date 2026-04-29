@@ -39,7 +39,7 @@
                 <button id="checkBtn" class="btn btn-primary btn-lg">Check Spam</button>
               </div>
 
-              <div id="resultCard" class="result-card d-none">
+              <div id="resultCard" class="result-card d-none" role="status" aria-live="polite" aria-atomic="true">
                 <h5 class="mb-2">Result</h5>
                 <p class="mb-1">
                   Prediction:
@@ -59,7 +59,7 @@
                 </p>
               </div>
 
-              <div id="errorAlert" class="alert alert-danger d-none mt-3" role="alert"></div>
+              <div id="errorAlert" class="alert alert-danger d-none mt-3" role="alert" aria-live="assertive" aria-atomic="true"></div>
             </div>
           </div>
         </div>
