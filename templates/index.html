@@ -76,6 +76,7 @@
       const resultRisk = document.getElementById("resultRisk");
       const errorAlert = document.getElementById("errorAlert");
       const sampleButtons = document.querySelectorAll(".sample-btn");
+      const defaultButtonText = checkBtn.textContent;
 
       sampleButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -99,13 +100,20 @@
         errorAlert.classList.add("d-none");
       }
 
+      function setLoadingState(isLoading) {
+        checkBtn.disabled = isLoading;
+        checkBtn.textContent = isLoading ? "Checking..." : defaultButtonText;
+      }
+
       checkBtn.addEventListener("click", async () => {
         clearError();
         resultCard.classList.add("d-none");
+        setLoadingState(true);
 
         const text = messageInput.value.trim();
         if (!text) {
           showError("Please enter a message.");
+          setLoadingState(false);
           return;
         }
 
@@ -135,6 +143,8 @@
           resultCard.classList.remove("d-none");
         } catch (error) {
           showError(error.message || "Something went wrong.");
+        } finally {
+          setLoadingState(false);
         }
       });
     </script>
