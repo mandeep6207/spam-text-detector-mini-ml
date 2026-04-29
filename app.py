@@ -79,6 +79,10 @@ def model_info():
 
     with open(MODEL_INFO_PATH, "r", encoding="utf-8") as info_file:
         info = json.load(info_file)
+
+    info["spam_threshold"] = SPAM_THRESHOLD
+    info["max_text_length"] = MAX_TEXT_LENGTH
+    info["model_ready"] = MODEL_READY
     return jsonify(info)
 
 
