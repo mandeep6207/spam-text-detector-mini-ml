@@ -75,7 +75,11 @@ def predict():
     if not isinstance(data, dict):
         return jsonify({"error": "Request body must be a JSON object."}), 400
 
-    text = (data.get("text") or "").strip()
+    raw_text = data.get("text")
+    if raw_text is not None and not isinstance(raw_text, str):
+        return jsonify({"error": "The text field must be a string."}), 400
+
+    text = (raw_text or "").strip()
 
     if not text:
         return jsonify({"error": "Please provide a text message."}), 400
