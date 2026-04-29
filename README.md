@@ -87,11 +87,18 @@ Response:
 }
 ```
 
+Notes:
+
+- The `text` field must be a string.
+- Messages longer than 5000 characters are rejected with `413`.
+
 ### `GET /health`
 
 Checks service and model readiness.
 
+Response also includes `spam_threshold` and `max_text_length`.
+
 ### `GET /model-info`
 
-Returns model metadata from `model_info.json`.
+Returns model metadata from `model_info.json` plus the active runtime settings.
 
