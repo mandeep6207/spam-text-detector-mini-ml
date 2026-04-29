@@ -53,7 +53,14 @@ def home():
 
 @app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "model_ready": MODEL_READY})
+    return jsonify(
+        {
+            "status": "ok",
+            "model_ready": MODEL_READY,
+            "spam_threshold": SPAM_THRESHOLD,
+            "max_text_length": MAX_TEXT_LENGTH,
+        }
+    )
 
 
 @app.route("/model-info", methods=["GET"])
