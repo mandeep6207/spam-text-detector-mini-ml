@@ -26,6 +26,16 @@ def preprocess_text(text: str) -> str:
     return " ".join(tokens)
 
 
+def get_spam_probability(probabilities, classes) -> float:
+    """Return the probability for the spam class."""
+    try:
+        spam_index = list(classes).index("spam")
+    except ValueError as exc:
+        raise ValueError("Model does not expose a spam class.") from exc
+
+    return float(probabilities[spam_index])
+
+
 with open(MODEL_PATH, "rb") as model_file:
     model = pickle.load(model_file)
 
@@ -57,6 +67,9 @@ def model_info():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    if not MODEL_READY:
+        return jsonify({"error": "Model artifacts are not loaded."}), 503
+
     data = request.get_json(silent=True) or {}
     text = (data.get("text") or "").strip()
 
@@ -66,10 +79,7 @@ def predict():
     processed_text = preprocess_text(text)
     features = vectorizer.transform([processed_text])
     probabilities = model.predict_proba(features)[0]
-    classes = list(model.classes_)
-
-    spam_index = classes.index("spam")
-    spam_probability = float(probabilities[spam_index])
+    spam_probability = get_spam_probability(probabilities, model.classes_)
 
     label = "Spam" if spam_probability >= SPAM_THRESHOLD else "Not Spam"
     confidence = spam_probability if label == "Spam" else 1 - spam_probability
